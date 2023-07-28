@@ -1,8 +1,13 @@
+using MangaStore.Application;
+using MangaStore.Infra;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
+{
+    builder.Services
+        .AddApplication()
+        .AddInfra();
+    builder.Services.AddControllers();
+}
 
 var app = builder.Build();
 

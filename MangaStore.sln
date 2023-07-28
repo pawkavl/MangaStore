@@ -3,23 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaStore.Api", "MangaStore.Api\MangaStore.Api.csproj", "{4F21A64C-78A4-4319-9DB1-87B28FEAE217}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaStore.Api", "MangaStore.Api\MangaStore.Api.csproj", "{4F21A64C-78A4-4319-9DB1-87B28FEAE217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaStore.Application", "MangaStore.Application\MangaStore.Application.csproj", "{EC80D2D5-9224-4935-9041-EA32834A3671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaStore.Application", "MangaStore.Application\MangaStore.Application.csproj", "{EC80D2D5-9224-4935-9041-EA32834A3671}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaStore.Contracts", "MangaStore.Contracts\MangaStore.Contracts.csproj", "{415BCB51-095C-4952-BA78-B0DFDF7E2B5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaStore.Contracts", "MangaStore.Contracts\MangaStore.Contracts.csproj", "{415BCB51-095C-4952-BA78-B0DFDF7E2B5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaStore.Domain", "MangaStore.Domain\MangaStore.Domain.csproj", "{1F76D175-0163-47B3-9DB2-2B10983E6B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaStore.Domain", "MangaStore.Domain\MangaStore.Domain.csproj", "{1F76D175-0163-47B3-9DB2-2B10983E6B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaStore.Infra", "MangaStore.Infra\MangaStore.Infra.csproj", "{FE779E89-6BA7-4FC3-901D-EA44080F937A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaStore.Infra", "MangaStore.Infra\MangaStore.Infra.csproj", "{FE779E89-6BA7-4FC3-901D-EA44080F937A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{70FCABC7-FB9A-4D77-93FC-D523E8AA2A1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{6FBA6ECA-E4D0-4298-B453-1E27E64D9153}"
+	ProjectSection(SolutionItems) = preProject
+		Login.http = Login.http
+		Register.http = Register.http
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4F21A64C-78A4-4319-9DB1-87B28FEAE217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,5 +47,14 @@ Global
 		{FE779E89-6BA7-4FC3-901D-EA44080F937A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE779E89-6BA7-4FC3-901D-EA44080F937A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE779E89-6BA7-4FC3-901D-EA44080F937A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6FBA6ECA-E4D0-4298-B453-1E27E64D9153} = {70FCABC7-FB9A-4D77-93FC-D523E8AA2A1C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56F69EBD-8D93-4FB7-96F5-F299D1CDC28D}
 	EndGlobalSection
 EndGlobal
