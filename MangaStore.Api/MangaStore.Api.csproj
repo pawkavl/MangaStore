@@ -4,11 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b9bb544c-6b41-437e-8498-61c9e079251f</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MangaStore.Contracts\MangaStore.Contracts.csproj" />
