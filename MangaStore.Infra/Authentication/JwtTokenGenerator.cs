@@ -1,4 +1,5 @@
 ﻿using MangaStore.Application.Shared.Interfaces.Authentication;
+using MangaStore.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,14 +17,14 @@ namespace MangaStore.Infra.Authentication
             _jwtSettings = jwtOptions.Value;
         }
 
-        public string GenerateToken(Guid userId, string loginName, string email)
+        public string GenerateToken(User user)
         {
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, email.ToString()),
-                new Claim(JwtRegisteredClaimNames.GivenName, loginName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email.ToString()),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.LoginName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

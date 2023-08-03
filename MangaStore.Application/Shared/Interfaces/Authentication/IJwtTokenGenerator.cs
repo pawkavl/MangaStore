@@ -1,7 +1,9 @@
-﻿namespace MangaStore.Application.Shared.Interfaces.Authentication
+﻿using MangaStore.Domain.Entities;
+
+namespace MangaStore.Application.Shared.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(Guid userId, string loginName, string email);
+        string GenerateToken(User user);
     }
 }

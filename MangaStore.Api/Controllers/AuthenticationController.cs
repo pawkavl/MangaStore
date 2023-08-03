@@ -20,7 +20,12 @@ namespace MangaStore.Api.Controllers
         public IActionResult Register(RegisterRequest request)
         {
             var authResult = _authenticationService.Register(request.LoginName, request.Age, request.Email, request.Password);
-            var response = new AuthenticationResponse(authResult.Id, authResult.LoginName, authResult.Age, authResult.Email, authResult.Token);
+            var response = new AuthenticationResponse(
+                authResult.User.Id, 
+                authResult.User.LoginName, 
+                authResult.User.Age, 
+                authResult.User.Email,
+                authResult.Token);
             return Ok(response);
         }
 
@@ -28,7 +33,12 @@ namespace MangaStore.Api.Controllers
         public IActionResult Login(LoginRequest request)
         {
             var authResult = _authenticationService.Login(request.Email, request.Password);
-            var response = new AuthenticationResponse(authResult.Id, authResult.LoginName, authResult.Age, authResult.Email, authResult.Token);
+            var response = new AuthenticationResponse(
+                authResult.User.Id,
+                authResult.User.LoginName, 
+                authResult.User.Age, 
+                authResult.User.Email, 
+                authResult.Token);
             return Ok(request);
         }
     }
