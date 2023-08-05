@@ -1,6 +1,8 @@
-﻿using MangaStore.Application.Shared.Interfaces.Authentication;
+﻿using ErrorOr;
+using MangaStore.Application.Shared.Interfaces.Authentication;
 using MangaStore.Application.Shared.Interfaces.Persistence;
 using MangaStore.Domain.Entities;
+using MangaStore.Domain.Shared.Errors;
 
 namespace MangaStore.Application.Services.Authentication
 {
@@ -16,11 +18,11 @@ namespace MangaStore.Application.Services.Authentication
             _userRepository = userRepository;
         }
 
-        public AuthenticationResult Register(string loginName, int age, string email, string password)
+        public ErrorOr<AuthenticationResult> Register(string loginName, int age, string email, string password)
         {
             if (_userRepository.getUserByEmail(email) is not null)
             {
-                throw new Exception("User with given email already exists.");
+                return Errors.User.DuplicateEmail;
             }
 
             var user = new User { LoginName = loginName, Email = email, Age = age, Password = password };
@@ -34,16 +36,16 @@ namespace MangaStore.Application.Services.Authentication
             );
         }
 
-        public AuthenticationResult Login(string email, string password)
+        public ErrorOr<AuthenticationResult> Login(string email, string password)
         {
             if (_userRepository.getUserByEmail(email) is not User user)
             {
-                throw new Exception("User with given email does not exist.");
+                return Errors.Authentication.InvalidCredentials;
             }
 
             if (user.Password != password)
             {
-                throw new Exception("Invalid login/password.");
+                return Errors.Authentication.InvalidCredentials;
             }
 
             var token = _jwtTokenGenerator.GenerateToken(user);
