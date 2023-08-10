@@ -1,4 +1,5 @@
-﻿using MangaStore.Application.Services.Authentication;
+﻿using MangaStore.Application.Services.Authentication.Commands;
+using MangaStore.Application.Services.Authentication.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MangaStore.Application
@@ -8,7 +9,8 @@ namespace MangaStore.Application
 
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthenticationCommandService, AuthenticationCommandService>();
+            services.AddScoped<IAuthenticationQueryService, AuthenticationQueryService>();
             return services;
         }
     }

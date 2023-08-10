@@ -1,5 +1,7 @@
 ﻿using ErrorOr;
-using MangaStore.Application.Services.Authentication;
+using MangaStore.Application.Services.Authentication.Commands;
+using MangaStore.Application.Services.Authentication.Queries;
+using MangaStore.Application.Services.Authentication.Shared;
 using MangaStore.Contracts.Authentication;
 using MangaStore.Domain.Shared.Errors;
 using Microsoft.AspNetCore.Mvc;
@@ -11,17 +13,19 @@ namespace MangaStore.Api.Controllers
     public class AuthenticationController : ApiController
     {
 
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthenticationCommandService _authenticationCommandService;
+        private readonly IAuthenticationQueryService _authenticationQueryService;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationCommandService authenticationCommandService, IAuthenticationQueryService authenticationQueryService)
         {
-            _authenticationService = authenticationService;
+            _authenticationCommandService = authenticationCommandService;
+            _authenticationQueryService = authenticationQueryService;
         }
 
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest request)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationService.Register(
+            ErrorOr<AuthenticationResult> authResult = _authenticationCommandService.Register(
                 request.LoginName,
                 request.Age,
                 request.Email,
@@ -36,7 +40,7 @@ namespace MangaStore.Api.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationService.Login(
+            ErrorOr<AuthenticationResult> authResult = _authenticationQueryService.Login(
                 request.Email,
                 request.Password);
 
