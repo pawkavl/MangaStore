@@ -1,6 +1,6 @@
 ﻿using MangaStore.Domain.Entities;
 
-namespace MangaStore.Application.Services.Authentication.Shared
+namespace MangaStore.Application.Authentication.Shared
 {
     public record AuthenticationResult
     (

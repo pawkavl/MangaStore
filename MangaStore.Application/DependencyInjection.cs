@@ -1,6 +1,5 @@
-﻿using MangaStore.Application.Services.Authentication.Commands;
-using MangaStore.Application.Services.Authentication.Queries;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 
 namespace MangaStore.Application
 {
@@ -9,8 +8,7 @@ namespace MangaStore.Application
 
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticationCommandService, AuthenticationCommandService>();
-            services.AddScoped<IAuthenticationQueryService, AuthenticationQueryService>();
+            services.AddMediatR(typeof(DependencyInjection).Assembly);
             return services;
         }
     }

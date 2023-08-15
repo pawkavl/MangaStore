@@ -1,32 +1,32 @@
 ﻿using ErrorOr;
-using MangaStore.Application.Services.Authentication.Shared;
+using MangaStore.Application.Authentication.Shared;
 using MangaStore.Application.Shared.Interfaces.Authentication;
 using MangaStore.Application.Shared.Interfaces.Persistence;
 using MangaStore.Domain.Entities;
 using MangaStore.Domain.Shared.Errors;
+using MediatR;
 
-namespace MangaStore.Application.Services.Authentication.Commands
+namespace MangaStore.Application.Authentication.Commands.Register
 {
-    public class AuthenticationCommandService : IAuthenticationCommandService
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
     {
-
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
 
-        public AuthenticationCommandService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
         }
 
-        public ErrorOr<AuthenticationResult> Register(string loginName, int age, string email, string password)
+        public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
-            if (_userRepository.getUserByEmail(email) is not null)
+            if (_userRepository.getUserByEmail(command.Email) is not null)
             {
                 return Errors.User.DuplicateEmail;
             }
 
-            var user = new User { LoginName = loginName, Email = email, Age = age, Password = password };
+            var user = new User { LoginName = command.LoginName, Email = command.Email, Age = command.Age, Password = command.Password };
             _userRepository.Add(user);
 
             var token = _jwtTokenGenerator.GenerateToken(user);

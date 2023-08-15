@@ -1,9 +1,10 @@
 ﻿using ErrorOr;
-using MangaStore.Application.Services.Authentication.Commands;
-using MangaStore.Application.Services.Authentication.Queries;
-using MangaStore.Application.Services.Authentication.Shared;
+using MangaStore.Application.Authentication.Commands.Register;
+using MangaStore.Application.Authentication.Queries.Login;
+using MangaStore.Application.Authentication.Shared;
 using MangaStore.Contracts.Authentication;
 using MangaStore.Domain.Shared.Errors;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangaStore.Api.Controllers
@@ -12,24 +13,18 @@ namespace MangaStore.Api.Controllers
     [ApiController]
     public class AuthenticationController : ApiController
     {
+        private readonly ISender _mediator;
 
-        private readonly IAuthenticationCommandService _authenticationCommandService;
-        private readonly IAuthenticationQueryService _authenticationQueryService;
-
-        public AuthenticationController(IAuthenticationCommandService authenticationCommandService, IAuthenticationQueryService authenticationQueryService)
+        public AuthenticationController(ISender mediator)
         {
-            _authenticationCommandService = authenticationCommandService;
-            _authenticationQueryService = authenticationQueryService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationCommandService.Register(
-                request.LoginName,
-                request.Age,
-                request.Email,
-                request.Password);
+            var command = new RegisterCommand(request.LoginName, request.Age, request.Email, request.Password);
+            ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);
 
             return authResult.MatchFirst(
                 authResult => Ok(MapAuthResult(authResult)),
@@ -38,11 +33,10 @@ namespace MangaStore.Api.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationQueryService.Login(
-                request.Email,
-                request.Password);
+            var query = new LoginQuery(request.Email, request.Password);
+            ErrorOr<AuthenticationResult> authResult = await _mediator.Send(query);
 
             if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
             {
